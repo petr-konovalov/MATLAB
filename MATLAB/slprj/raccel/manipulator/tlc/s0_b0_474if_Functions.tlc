@@ -1,0 +1,38 @@
+%implements s0_b0_474if_Functions "C"
+
+%function rt_mldivide_U1d2x2_U2d2x1_Yd2x1_snf_Fcn0(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+int32_T r1;
+int32_T r2;
+real_T a21;
+if (muDoubleScalarAbs(u0[1]) > muDoubleScalarAbs(u0[0])) {
+    r1 = 1;
+    r2 = 0;
+} else {
+    r1 = 0;
+    r2 = 1;
+}
+a21 = u0[r2] / u0[r1];
+y[1] = (u1[r2] - u1[r1] * a21) / (u0[2 + r2] - u0[2 + r1] * a21);
+y[0] = (u1[r1] - u0[2 + r1] * y[1]) / u0[r1];
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+extern void rt_mldivide_U1d2x2_U2d2x1_Yd2x1_snf(\
+%assign comma = ""
+%<comma>const real_T u0[4]\
+%assign comma = ", "
+%<comma>const real_T u1[2]\
+%assign comma = ", "
+%<comma>real_T y[2]\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 0, fcnProtoType)>
+%return fcnBuff
+%endfunction
+

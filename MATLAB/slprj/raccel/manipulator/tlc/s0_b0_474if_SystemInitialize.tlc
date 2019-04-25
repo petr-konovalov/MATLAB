@@ -1,0 +1,25 @@
+%implements s0_b0_474if_SystemInitialize "C"
+
+%function SystemInitialize(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%<SLibGetRootInportsFromFile(system, TLC_TRUE)>
+%<SLibInsertAsyncTaskInitializeCode(system)>
+%<SLibWriteMachineInitialize()>
+rtX.nvwdxecq2r[0] = rtP.Integrator_IC[0];
+rtX.nvwdxecq2r[1] = rtP.Integrator_IC[1];
+rtX.nvwdxecq2r[2] = rtP.Integrator_IC[2];
+rtX.nvwdxecq2r[3] = rtP.Integrator_IC[3];
+%<SLibInsertInitPeriodicCStatesFcn(system)>
+%closefile cfgTxt
+%<cfgTxt>
+%endfunction
+%function SystemInitializeFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void SystemInitialize(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 2, fcnProtoType)>
+%endfunction

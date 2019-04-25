@@ -1,0 +1,84 @@
+%implements s0_b0_474if_Outputs "C"
+
+%function OutputsForTID(block, system, tid) Output
+%if tid == 0
+%assign ::GlobalCurrentTID = 0
+%<SLibCGIRAccessLocalVar(0, 0, "")> %% correqhiwq
+%<SLibCGIRAccessLocalVar(4, 0, "")> %% jwijdzzd1t
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+real_T tmp[2];
+real_T tmp_p;
+real_T tmp_e;
+%closefile localVarDecl
+%assign _modelSS = ""
+
+%if SLibCG_FcnCallArgAccessed(0,3,0,0)
+%<SLibCGIRAccessLocalVar(6, 0, "")> %% e3jzasidak
+%endif
+
+%assign tlcOutputsFcnOfS0B0 = OpaqueTLCBlockFcn("Outputs", 0, 0, 0, 3)
+%assign tlcOutputsFcnOfS0B1 = OpaqueTLCBlockFcn("Outputs", 0, 1, 0, 3)
+%assign tlcOutputsFcnOfS0B2 = OpaqueTLCBlockFcn("Outputs", 0, 2, 0, 3)
+%assign tlcOutputsFcnOfS0B3 = OpaqueTLCBlockFcn("Outputs", 0, 3, 0, 3)
+%assign tlcOutputsFcnOfS0B4 = OpaqueTLCBlockFcn("Outputs", 0, 4, 0, 3)
+%assign tlcOutputsFcnOfS0B6 = OpaqueTLCBlockFcn("Outputs", 0, 6, 0, 3)
+%assign tlcOutputsFcnOfS0B7 = OpaqueTLCBlockFcn("Outputs", 0, 7, 0, 3)
+%assign tlcOutputsFcnOfS0B8 = OpaqueTLCBlockFcn("Outputs", 0, 8, 0, 3)
+%assign tlcOutputsFcnOfS0B9 = OpaqueTLCBlockFcn("Outputs", 0, 9, 0, 3)
+%<SLibGetRootInportsFromFile(system, TLC_FALSE)>
+%<SLibGenerateExtModeOutput(system)>
+rtB.lstkzycu4y[0] = rtX.nvwdxecq2r[0];
+rtB.lstkzycu4y[1] = rtX.nvwdxecq2r[1];
+rtB.lstkzycu4y[2] = rtX.nvwdxecq2r[2];
+rtB.lstkzycu4y[3] = rtX.nvwdxecq2r[3];
+if (%<(SLibCGIRIsSampleHit(1, 0))>) {
+%<tlcOutputsFcnOfS0B0>\
+%<tlcOutputsFcnOfS0B1>\
+%<tlcOutputsFcnOfS0B2>\
+}
+%<tlcOutputsFcnOfS0B3>\
+%<tlcOutputsFcnOfS0B4>\
+tmp_p = rtB.lstkzycu4y[0] - rtP.Finalstate_Value[0];
+tmp_e = rtB.lstkzycu4y[1] - rtP.Finalstate_Value[1];
+rtB.aqycwokc0a[0] = ((0.0 - correqhiwq[0]) - (rtP.k0_Gain[0] * tmp_p + rtP.k0_Gain[2] * tmp_e)) - (rtP.k1_Gain[0] * rtB.lstkzycu4y[2] + rtP.k1_Gain[2] * rtB.lstkzycu4y[3]);
+rtB.aqycwokc0a[1] = ((0.0 - correqhiwq[1]) - (rtP.k0_Gain[1] * tmp_p + rtP.k0_Gain[3] * tmp_e)) - (rtP.k1_Gain[1] * rtB.lstkzycu4y[2] + rtP.k1_Gain[3] * rtB.lstkzycu4y[3]);
+%<tlcOutputsFcnOfS0B6>\
+tmp[0] = rtB.aqycwokc0a[0] - jwijdzzd1t[0];
+tmp[1] = rtB.aqycwokc0a[1] - jwijdzzd1t[1];
+%<(SLibCGCallSubFcn("rt_mldivide_U1d2x2_U2d2x1_Yd2x1_snf", ["e3jzasidak", "tmp", "rtB.bvwxvrdrfo"], 0, 3, 0))>;
+if (%<(SLibCGIRIsSampleHit(1, 0))>) {
+%<tlcOutputsFcnOfS0B7>\
+%<tlcOutputsFcnOfS0B8>\
+%<tlcOutputsFcnOfS0B9>\
+}
+%<SLibInsertSolverResetCode()>\
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedOutputLocalVars", localVarDecl)>
+%assign ::GlobalCurrentTID = []
+%endif
+%if tid == 2
+%assign ::GlobalCurrentTID = 2
+%assign ::GlobalCurrentTID = []
+%endif
+%endfunction
+%function OutputsFcnProtoTypeForTID(block, system, tid) Output
+%if tid == 0
+%assign ::GlobalCurrentTID = 0
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Outputs0(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 3, fcnProtoType)>
+%assign ::GlobalCurrentTID = []
+%endif
+%if tid == 2
+%assign ::GlobalCurrentTID = 2
+%assign ::GlobalCurrentTID = []
+%endif
+%endfunction
