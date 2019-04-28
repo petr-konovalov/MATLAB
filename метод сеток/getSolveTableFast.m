@@ -1,4 +1,4 @@
-function printSolveTableFast(f, phi, alp, bet, N, M, T, solFunc)
+function us = getSolveTableFast(f, phi, alp, bet, N, M, T, solFunc)
     hN   = round(N / 5);
     hM   = round(M / 5);
     
@@ -10,6 +10,4 @@ function printSolveTableFast(f, phi, alp, bet, N, M, T, solFunc)
             us(k, j) = res((k - 1) * hM + 1, (j - 1) * hN + 1);
         end
     end 
-    
-    disp(us);
 end
