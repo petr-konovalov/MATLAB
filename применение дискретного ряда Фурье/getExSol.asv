@@ -1,0 +1,19 @@
+function res = getExSol()
+    exSumSz = 10;
+    C = zeros(1, exSumSz);
+
+    for p = 1: exSumSz
+        C(p) = contScalMult(@phi, @(t)(Xi(p, t)));
+    end
+    
+    res = zeros(6, 6);
+    h = 1 / 5;
+    tau = 0.1 / 5;
+    
+    for i = 1: 6
+        xi = 
+        for k = 1: 6
+            
+        end
+    end
+end
