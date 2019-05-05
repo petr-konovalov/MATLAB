@@ -6,14 +6,12 @@ function res = getExSol(exSumSz)
     end
     
     res = zeros(6, 6);
-    h = 1 / 5;
-    tau = 0.1 / 5;
-    res(:, 1) = phi(0: h: 1)';
+    res(:, 1) = phi(0: 0.2: 1)';
     
     for i = 1: 6
-        xi = (i - 1) * h;
+        xi = (i - 1) * 0.2;
         for k = 2: 6
-            tk = (k - 1) * tau;
+            tk = (k - 1) * 0.02;
             for p = 1: exSumSz
                 res(i, k) = res(i, k) + C(p) * T(p, tk) * sin(p * pi * xi);
             end
