@@ -1,9 +1,0 @@
-%aim distributor interface
-classdef (Abstract) aimDistributor
-    
-    methods (Abstract)
-        distribution = getDistribution(obj)
-    end
-    
-end
-
