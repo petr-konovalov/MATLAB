@@ -1,5 +1,5 @@
 %brute force aim distributor 
-%finds distribution which miminimizes maximum distantce between start
+%finds distribution which minimizes maximum distantce between start
 %position and aim position
 classdef minMaxEdgeBFAD < bruteForceAD
     

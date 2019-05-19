@@ -1,0 +1,10 @@
+mGr = matchingGraph(3, 4);
+mGr.g{1}.add(1);
+mGr.g{1}.add(3);
+mGr.g{2}.add(1);
+mGr.g{2}.add(2);
+mGr.g{2}.add(3);
+mGr.g{2}.add(4);
+mGr.g{3}.add(3);
+mGr.g{3}.add(4);
+disp(mGr.calcMatching);
