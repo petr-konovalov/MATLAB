@@ -9,22 +9,16 @@ classdef matchingAD < aimDistributor
         end
         
         function distribution = getDistribution(obj)
-            obj.g = matchingGraph(size(obj.startPos, 1), size(obj.aimPos, 1));
-            for k = 1: obj.g.leftLobeSize
-                obj.g.g{k}.ensureCapacity(obj.g.rightLobeSize);
-            end
+            obj.g = initializeGraph(obj.startPos, obj.aimPos);
             distribution = zeros(1, obj.g.leftLobeSize);
-            
             edgeArr = obj.calcEdgeArr;
-            edgeArrWorkLen = size(edgeArr, 1);
+            r = size(edgeArr, 1);
             isAppointed = zeros(2, obj.g.leftLobeSize);
             for proc = obj.g.leftLobeSize: -1: 1
                 l = 0;
-                r = edgeArrWorkLen;
                 while (r - l > 1)
                     mid = fix((l + r) / 2);
                     buildGraph(obj.g, edgeArr, isAppointed, mid);
-                    obj.g.calcMaxMatching;
                     if obj.g.getMatchingSize == proc
                         r = mid;
                     else
@@ -32,20 +26,7 @@ classdef matchingAD < aimDistributor
                     end
                 end
                 buildGraph(obj.g, edgeArr, isAppointed, r);
-                obj.g.calcMaxMatching;
-                edgeArrWorkLen = r;
-                match = obj.g.getMatching;
-                maxEdge = [-1 -1];
-                maxEdgeLen = 0;
-                for k = 1: size(match, 2)
-                    if match(k) ~= -1
-                        curEdgeLen = norm2(obj.startPos(match(k), :) - obj.aimPos(k, :));
-                        if curEdgeLen > maxEdgeLen
-                            maxEdgeLen = curEdgeLen;
-                            maxEdge = [match(k), k];
-                        end
-                    end
-                end
+                maxEdge = obj.getMaxMatchingEdge;
                 isAppointed(1, maxEdge(1)) = 1;
                 isAppointed(2, maxEdge(2)) = 1;
                 distribution(maxEdge(1)) = maxEdge(2);
@@ -64,6 +45,21 @@ classdef matchingAD < aimDistributor
                 end
             end
             edgeArr = sortrows(edgeArr);
+        end
+        
+        function maxEdge = getMaxMatchingEdge(obj)
+            match = obj.g.getMatching;
+            maxEdge = [-1 -1];
+            maxEdgeLen = 0;
+            for k = 1: size(match, 2)
+                if match(k) ~= -1
+                    curEdgeLen = norm2(obj.startPos(match(k), :) - obj.aimPos(k, :));
+                    if curEdgeLen > maxEdgeLen
+                        maxEdgeLen = curEdgeLen;
+                        maxEdge = [match(k), k];
+                    end
+                end
+            end
         end
     end
     
@@ -85,6 +81,14 @@ function buildGraph(g, edgeArr, isAppointed, edgeArrWorkLen)
         if ~isAppointed(1, edgeArr(k, 2)) && ~isAppointed(2, edgeArr(k, 3))
             g.g{edgeArr(k, 2)}.add(edgeArr(k, 3));
         end
+    end
+    g.calcMaxMatching;
+end
+
+function g = initializeGraph(startPos, aimPos)
+    g = matchingGraph(size(startPos, 1), size(aimPos, 1));
+    for k = 1: g.leftLobeSize
+        g.g{k}.ensureCapacity(g.rightLobeSize);
     end
 end
 

@@ -1,5 +1,5 @@
-testCount = 1000;
-pntCnt = 4;
+testCount = 100;
+pntCnt = 6;
 for test = 1: testCount
     startPos = zeros(pntCnt, 2);
     aimPos = zeros(pntCnt, 2);
