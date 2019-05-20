@@ -2,11 +2,6 @@
 %finds distribution which minimizes optFunc
 classdef (Abstract) bruteForceAD < aimDistributor
     
-    methods (Abstract, Access = 'protected')
-        val = optFunc(obj, perm);
-        res = comp(obj, firstVal, secondVal);
-    end
-       
     methods
         function distribution = getDistribution(obj)
             distSz = size(obj.startPos, 1);
@@ -22,6 +17,11 @@ classdef (Abstract) bruteForceAD < aimDistributor
                 end
             end
         end
+    end
+    
+    methods (Abstract, Access = 'protected')
+        val = optFunc(obj, perm);
+        res = comp(obj, firstVal, secondVal);
     end
     
 end

@@ -5,8 +5,7 @@ classdef minMaxEdgeBFAD < bruteForceAD
     
     methods
         function obj = minMaxEdgeBFAD(startPos, aimPos)
-            obj.startPos = startPos;
-            obj.aimPos = aimPos;
+            obj = obj.setArrangement(startPos, aimPos);
         end
     end
     
