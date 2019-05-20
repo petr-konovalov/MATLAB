@@ -1,13 +1,13 @@
 %clear all;
 %BFAD = minMaxEdgeBFAD([0 0; 5 0; 10 0; 15 0], [0 3; 15 3; 10 3; 5 3]);  
 %BFAD = minMaxEdgeBFAD([6 0; 7 0; 0 0; 4 0], [1 0; 2 0; 3 0; 5 0]);
-pntCnt = 8;
+pntCnt = 20;
 startPos = zeros(pntCnt, 2);
 aimPos = zeros(pntCnt, 2);
-l = -50;
-r = 50;
-u = 50;
-d = -50;
+l = -100;
+r = 100;
+u = 100;
+d = -100;
 
 for k = 1: pntCnt
     startPos(k, 1) = rand(1) * (r - l) + l;
@@ -15,8 +15,8 @@ for k = 1: pntCnt
     aimPos(k, 1) = rand(1) * (r - l) + l;
     aimPos(k, 2) = rand(1) * (u - d) + d;
 end
-BFAD = minMaxEdgeBFAD(startPos, aimPos);
-dis = BFAD.getDistribution;
+MAD = matchingAD(startPos, aimPos);
+dis = MAD.getDistribution;
 
 hold on;
     axis([l, r, d, u]);

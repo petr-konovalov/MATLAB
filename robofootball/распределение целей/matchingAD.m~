@@ -18,12 +18,19 @@ classdef matchingAD < aimDistributor
             edgeArr = obj.calcEdgeArr;
             edgeArrWorkLen = size(edgeArr, 1);
             isAppointed = zeros(2, obj.g.leftLobeSize);
-            for proc = obj.g.leftLobeSize: -1: 1
+            for proc = obj.g.leftLobeSize: -1: 2
                 l = 0;
                 r = edgeArrWorkLen;
                 while (r - l > 1)
                     mid = fix((l + r) / 2);
-                    buildGraph(obj.g, edgeArr, isAppointed, mid);
+                    for k = 1: obj.g.leftLobeSize 
+                        obj.g.g{k}.clear;
+                    end
+                    for k = 1: mid
+                        if ~isAppointed(1, edgeArr(k, 2)) && ~isAppointed(2, edgeArr(k, 3))
+                            obj.g.g{edgeArr(k, 2)}.add(edgeArr(k, 3));
+                        end
+                    end
                     obj.g.calcMaxMatching;
                     if obj.g.getMatchingSize == proc
                         r = mid;
@@ -31,8 +38,6 @@ classdef matchingAD < aimDistributor
                         l = mid;
                     end
                 end
-                buildGraph(obj.g, edgeArr, isAppointed, r);
-                obj.g.calcMaxMatching;
                 edgeArrWorkLen = r;
                 match = obj.g.getMatching;
                 maxEdge = [-1 -1];
@@ -77,14 +82,11 @@ function res = norm2(vect)
     res = vect(1) ^ 2 + vect(2) ^ 2;
 end
 
-function buildGraph(g, edgeArr, isAppointed, edgeArrWorkLen)
-    for k = 1: g.leftLobeSize 
-        g.g{k}.clear;
-    end
-    for k = 1: edgeArrWorkLen
-        if ~isAppointed(1, edgeArr(k, 2)) && ~isAppointed(2, edgeArr(k, 3))
-            g.g{edgeArr(k, 2)}.add(edgeArr(k, 3));
-        end
+function buildGraph(g, 
+
+function printG(obj)
+    for k = 1: obj.g.leftLobeSize
+        disp(obj.g.g{k});
     end
 end
 
