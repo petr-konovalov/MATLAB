@@ -1,5 +1,0 @@
-uf = getExSol(10);
-
-for N = [5, 10, 20]
-    
-end
