@@ -48,7 +48,7 @@ end
 % 
 % nPntDOWN = getNextPointOnPath(pathDOWN, obst);
 
-plot(xUP, yUP, 'linewidth', 3);
+plot(xUP, yUP, '-g', 'linewidth', 3);
 plot(xDOWN, yDOWN, 'linewidth', 3);
 for k = 1: size(obst, 1)
     drawCircle(obst(k, 1), obst(k, 2), obst(k, 3), '-r', 3);

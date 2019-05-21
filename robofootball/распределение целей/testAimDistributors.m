@@ -1,5 +1,5 @@
 testCount = 100;
-pntCnt = 6;
+pntCnt = 7;
 for test = 1: testCount
     startPos = zeros(pntCnt, 2);
     aimPos = zeros(pntCnt, 2);
@@ -16,8 +16,14 @@ for test = 1: testCount
     end
     BFAD = minMaxEdgeBFAD(startPos, aimPos);
     MAD = matchingAD(startPos, aimPos);
-    if isequal(BFAD.getDistribution, MAD.getDistribution)
-        fprintf('Test %5d ok\n', test);
+    tic;
+    BFADDis = BFAD.getDistribution;
+    BFADTimer = toc;
+    tic;
+    MADDis = MAD.getDistribution;
+    MADTimer = toc;
+    if isequal(BFADDis, MADDis)
+        fprintf('Test %5d ok BFADTimer: %f MADTimer: %f\n', test, BFADTimer, MADTimer);
     else
         fprintf('Test %5d fail\n', test);
     end
