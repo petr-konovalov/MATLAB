@@ -1,10 +1,12 @@
 function res = simpleIteration(U_0, U_ex, hx, hy, fv, m, ro)
+    hx2 = hx * hx;
+    hy2 = hy * hy;
     U_k_2 = U_0;
-    U_k_1 = getNextApprox(size(U_0), U_k_2, fv, hx, hy);
-    res = getNextApprox(size(U_0), U_k_1, fv, hx, hy);
+    U_k_1 = getNextApprox(size(U_0), U_k_2, fv, hx2, hy2);
+    res = getNextApprox(size(U_0), U_k_1, fv, hx2, hy2);
     for k = 2: m
-        res = getNextApprox(size(U_0), U_k_1, fv, hx, hy);
-        if mod(k, 5) == 0
+        res = getNextApprox(size(U_0), U_k_1, fv, hx2, hy2);
+        if mod(k, 5) == 0 || m <= 10
             printTable(k, U_0, res, U_k_1, U_ex, fv, hx, hy, U_k_2, ro);
         end
         U_k_2 = U_k_1;
@@ -12,9 +14,7 @@ function res = simpleIteration(U_0, U_ex, hx, hy, fv, m, ro)
     end
 end
 
-function res = getNextApprox(s, U, fv, hx, hy)
-    hx2 = hx * hx;
-    hy2 = hy * hy;
+function res = getNextApprox(s, U, fv, hx2, hy2)
     res = zeros(s);
     
     res([1, s(1)], 1: s(2)) = U([1, s(1)], 1: s(2));

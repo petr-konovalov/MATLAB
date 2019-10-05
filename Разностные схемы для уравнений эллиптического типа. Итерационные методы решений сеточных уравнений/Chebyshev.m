@@ -1,4 +1,6 @@
 function res = Chebyshev(U_0, U_ex, hx, hy, fv, m, D, d)
+    hx2 = hx * hx;
+    hy2 = hy * hy;
     p = ceil(log(m) / log(2));
     n = 2 ^ p;
     tau = zeros(1, n);
@@ -8,10 +10,10 @@ function res = Chebyshev(U_0, U_ex, hx, hy, fv, m, D, d)
     end
     
     U_k_1 = U_0;
-    res = getNextApprox(size(U_0), U_k_1, fv, hx, hy, tau(1));
+    res = getNextApprox(size(U_0), U_k_1, fv, hx2, hy2, tau(1));
     for k = 2: n
-        res = getNextApprox(size(U_0), U_k_1, fv, hx, hy, tau(k));
-        if mod(k, 5) == 0
+        res = getNextApprox(size(U_0), U_k_1, fv, hx2, hy2, tau(k));
+        if mod(k, 5) == 0 || m <= 10
             printTable(k, U_0, res, U_k_1, U_ex, fv, hx, hy);
         end
         U_k_1 = res;
@@ -29,9 +31,7 @@ function res = getIterParams(p)
     end
 end
 
-function res = getNextApprox(s, U, fv, hx, hy, t)
-    hx2 = hx * hx;
-    hy2 = hy * hy;
+function res = getNextApprox(s, U, fv, hx2, hy2, t)
     res = zeros(s);
     
     res([1, s(1)], 1: s(2)) = U([1, s(1)], 1: s(2));
