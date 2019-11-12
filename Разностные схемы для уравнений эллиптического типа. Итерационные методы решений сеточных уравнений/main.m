@@ -2,7 +2,7 @@
 
 M = 5;
 N = 3 * M;
-eps = 1e-3;
+eps = 1e-5;
 lx = pi;
 ly = 1;
 hx = lx / N;

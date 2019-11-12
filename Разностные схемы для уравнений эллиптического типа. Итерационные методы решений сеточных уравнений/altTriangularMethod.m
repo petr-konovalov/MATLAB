@@ -8,6 +8,7 @@ function res = altTriangularMethod(U_0, U_ex, hx, hy, fv, m, k1, k2, tau)
         end
         U_k_1 = res;
     end
+    printTable(m, U_0, res, U_k_1, U_ex, fv, hx, hy);
 end
 
 function res = getNextApprox(s, U, fv, hx, hy, k1, k2, t)

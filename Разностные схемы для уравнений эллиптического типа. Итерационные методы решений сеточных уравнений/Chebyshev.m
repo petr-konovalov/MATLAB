@@ -8,14 +8,17 @@ function res = Chebyshev(U_0, U_ex, hx, hy, fv, m, D, d)
     for k = 1: n
         tau(k) = 2/(D+d+(D-d)*cos(theta(k)*pi/(2*n)));
     end
+%     for k = 1: n
+%         tau(k) = 2/(D+d+(D-d)*cos((2 * k - 1)*pi/(2*n)));
+%     end
     
     U_k_1 = U_0;
     res = getNextApprox(size(U_0), U_k_1, fv, hx2, hy2, tau(1));
     for k = 2: n
         res = getNextApprox(size(U_0), U_k_1, fv, hx2, hy2, tau(k));
-        if mod(k, 5) == 0 || m <= 10
+        %if mod(k, 5) == 0 || m <= 10
             printTable(k, U_0, res, U_k_1, U_ex, fv, hx, hy);
-        end
+        %end
         U_k_1 = res;
     end
 end
