@@ -2,7 +2,7 @@
 
 M = 5;
 N = 3 * M;
-eps = 1e-5;
+eps = 1e-3;
 lx = pi;
 ly = 1;
 hx = lx / N;
@@ -43,3 +43,21 @@ xsi = gma1 / gma2;
 ro = (1 - xsi) / (1 + xsi);
 m = ceil(log(eps) / log(ro));
 printResult("altTriangularMethod", N, M, U_0, U_ex, hx, hy, fv, m, ro, k1, k2, tau);
+
+fprintf('\n\n----------------------------------------Схема переменных направлений----------------------------------------\n\n');
+
+fprintf("Мера аппроксимации: %e\n", Err(U_ex, fv, hx, hy));
+fprintf("Норма невязки нулевого приближения: %f\n", Err(U_0, fv, hx, hy));
+
+d = min(4/(hx*hx)*sin(pi/(2*N))^2, 4/(hy*hy)*sin(pi/(2*M))^2);
+D = max(4/(hx*hx)*cos(pi/(2*N))^2, 4/(hy*hy)*cos(pi/(2*M))^2);
+tau = 2 / sqrt(d * D);
+m = ceil(max(N, M) / (2 * pi) * log(1 / eps));
+
+fprintf("\n%5s %15s %15s %15s %15s %15s\n\n", "iter", "|/\U^k+F|", ...
+            "rel.d", "|U^k-U*|", "rel.err", "|U^k-U^(k-1)|");
+U_sol = diffDirectScheme(U_0, U_ex, N, M, hx, hy, fv, m, tau);
+fprintf("\nПриближённое решение на крупной сетке\n");
+printSolution(U_sol, N, M);
+fprintf("\nТочное решение на крупной сетке\n");
+printSolution(U_ex, N, M);
