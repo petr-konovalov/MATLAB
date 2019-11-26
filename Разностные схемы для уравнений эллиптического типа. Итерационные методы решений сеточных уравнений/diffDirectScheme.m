@@ -11,7 +11,7 @@ function res = diffDirectScheme(U_0, U_ex, N, M, hx, hy, fv, m, tau)
     U_kp1 = getNextApprox(res, N, M, hx, hy, fv, tau, A_, B_, C_, A__, B__, C__);
     
     for k = 2: m
-        printTable(k, U_0, U_kp1, res, U_ex, fv, hx, hy);
+        printTable(true, 5, k, U_0, U_kp1, res, U_ex, fv, hx, hy);
         res = U_kp1;
         U_kp1 = getNextApprox(res, N, M, hx, hy, fv, tau, A_, B_, C_, A__, B__, C__);
     end

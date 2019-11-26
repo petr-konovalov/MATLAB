@@ -3,12 +3,10 @@ function res = altTriangularMethod(U_0, U_ex, hx, hy, fv, m, k1, k2, tau)
     res = getNextApprox(size(U_0), U_k_1, fv, hx, hy, k1, k2, tau);
     for k = 2: m
         res = getNextApprox(size(U_0), U_k_1, fv, hx, hy, k1, k2, tau);
-        if mod(k, 5) == 0 || m <= 10
-            printTable(k, U_0, res, U_k_1, U_ex, fv, hx, hy);
-        end
+        printTable(mod(k, 5) == 0 || m <= 10, 4, k, U_0, res, U_k_1, U_ex, fv, hx, hy);
         U_k_1 = res;
     end
-    printTable(m, U_0, res, U_k_1, U_ex, fv, hx, hy);
+    printTable(true, 4, m, U_0, res, U_k_1, U_ex, fv, hx, hy);
 end
 
 function res = getNextApprox(s, U, fv, hx, hy, k1, k2, t)

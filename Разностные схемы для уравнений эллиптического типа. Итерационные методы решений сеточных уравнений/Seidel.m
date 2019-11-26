@@ -6,9 +6,7 @@ function res = Seidel(U_0, U_ex, hx, hy, fv, m, ro)
     res = getNextApprox(size(U_0), U_k_1, fv, hx2, hy2);
     for k = 2: m
         res = getNextApprox(size(U_0), U_k_1, fv, hx2, hy2);
-        if mod(k, 5) == 0 || m <= 10
-            printTable(k, U_0, res, U_k_1, U_ex, fv, hx, hy, U_k_2, ro);
-        end
+        printTable(mod(k, 5) == 0 || m <= 10, 2, k, U_0, res, U_k_1, U_ex, fv, hx, hy, U_k_2, ro);
         U_k_2 = U_k_1;
         U_k_1 = res;
     end
