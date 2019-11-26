@@ -8,7 +8,7 @@ global eps;
 ItRes = zeros(5, size(MSet, 2));
 
 for j = 1: size(MSet, 2)
-    State = j;
+    State = j; %так, вообще говоря, не стоит делать, но я хотел побыстрее задачу сдать :D
     M = MSet(j);
     N = NSet(j);
     fprintf('\n\n%d %d', M, N);
@@ -47,13 +47,18 @@ for j = 1: size(MSet, 2)
     gma1 = d / (2 + 2 * sqrt(eta));
     gma2 = d / (4 * sqrt(eta));
     tau = 2 / (gma1 + gma2);
-    k1 = omga / (hx * hx);
-    k2 = omga / (hy * hy);
+    k1 = omga / hx2;
+    k2 = omga / hy2;
     xsi = gma1 / gma2;
     ro = (1 - xsi) / (1 + xsi);
-    m = ceil(log(eps) / log(ro)) + 2;
+    m = ceil(log(eps) / log(ro)) + 2; %почему-то если 2 не добавлять, то требуемая точность не достигается
+    %с добавленной двойкой проверил при M = 5 10 20 40 80 N = 3 * M
+    %и eps = 1e-3 1e-2 всё было хорошо 
     printResult("altTriangularMethod", N, M, U_0, U_ex, hx, hy, fv, m, ro, k1, k2, tau);
 
+    %По хорошему, вывод для схемы переменных направлений надо было
+    %организовать через printResult, как сделано для остальных методов, 
+    %но мне хотелось побыстрее задачу сдать :D
     fprintf('\n\n----------------------------------------Схема переменных направлений----------------------------------------\n\n');
 
     fprintf("Мера аппроксимации: %e\n", Err(U_ex, fv, hx, hy));
@@ -72,7 +77,10 @@ for j = 1: size(MSet, 2)
     fprintf("\nТочное решение на крупной сетке\n");
     printSolution(U_ex, N, M);
 end
-%disp(ItRes);
+
+%вывод можно было организовать в циклах, но мне хотелось побыстрее задачу
+%сдать :D
+
 fprintf('\n\n');
 fprintf('%60s%7s%7s%30s\n\n', 'Название метода', 'N', 'M', 'Количество итераций')
 
