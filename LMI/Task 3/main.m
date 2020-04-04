@@ -4,6 +4,6 @@ B = [0; 0];
 G = [1 0; 0 1];
 Q = [-3 2; 2 -3];
 
-[opt, res] = solve(A, Q, R, G, B);
-disp(opt);
+res = solve(A, Q, R, G, B);
+yalmip('clear');
 disp(res);

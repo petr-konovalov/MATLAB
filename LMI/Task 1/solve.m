@@ -1,10 +1,9 @@
-function res = solve(A, Q, R, G, B)
+function [opt, res] = solve(A, Q, R, G, B)
     if checkConditions(A, Q, R, G, B)
         n = size(Q, 1);
         m = size(R, 1);
         setlmis([]);
         [P, VarCnt, PStr] = lmivar(1, [n, 1]);
-        disp(PStr);
         lmi1 = newlmi;
         lmiterm([lmi1, 1, 1, P], -1, 1);
         lmi2 = newlmi;
@@ -20,7 +19,7 @@ function res = solve(A, Q, R, G, B)
             c(j) = -trace(Pt);
         end
         [copt, xopt] = mincx(lmisys, c, [1e-4, 100, -1, 10, 0]);
-        disp(copt);
+        opt = copt;
         res = dec2mat(lmisys, xopt, P);
     else
         disp('Размерности не соответсвуют');

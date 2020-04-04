@@ -1,3 +1,6 @@
+.gitignore
 *.asv
 *.m~
 /cvx/*
+/SeDuMi/*
+/YALMIP/*
