@@ -1,11 +1,36 @@
-% eps = 1e-5;
-% th0 = 0;
-% dth0 = 1.5;
-% dTh = zeros(1, size(t, 1));
-% for j = 1: size(t, 1)
-%     dTh(j) = getDTheta(0, th(j), 0, 2.5, L, l, g);
-%     disp(dTh(j));
-%     %disp(dTh^2-((l-L*cos(th0)^2)/(l-L*cos(theta)^2))^(1/L)*dth0^2+...
-%         %2*g*integral(@(s)sin(s)./(L*cos(s).^2-l).*abs((l-L*cos(s).^2)/(l-L*cos(theta).^2)).^(1/L), th0, theta));
-% end
+global M m l R J g A B C a L RR M_ T HCoef Theta0 dTheta0 w0 stp FStepX version;
+version = 1;
+M = 1;
+m = 0.1;
+l = 0.5;
+R = 0.1;
+Theta0 = 0;
+dTheta0 = 3.1;
+J = (M*R*R)/2;
+g = 9.8;
+L = 1;
+
+C = 3*J;
+A = C+m*R*R;
+B = m*R*l;
+a = L*sin(Theta0);
+w0 = a/R;
+
+N = 120;
+M_= 7;
+Q = [0.1 0 0; 0 0.1 0; 0 0 1];
+RR = 0.001;
+
+%Рассчёт решения абг уравнения и его периода
+TStart = 0;
+TFinish = 5;
+stp = 0.005;
+[gt, gX] = solveSsEq(Theta0, dTheta0, TStart, TFinish);
+FStepX = difTStepToFixTStep(stp, gt, gX);
+plot(gt, gX);
+T = linSearchGFValArg(0, TStart+0.1, TFinish, gt, gX(:, 1));
+T = T(2);
+
+%Рассчёт HCoef через LMI
+HCoef = getHCoef(Q, RR, N, M_, T);
 

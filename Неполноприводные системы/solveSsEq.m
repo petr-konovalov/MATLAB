@@ -1,4 +1,4 @@
-function [t, X] = solveSsEq(th0, dth0)
+function [t, X] = solveSsEq(th0, dth0, TStart, TFinish)
     opts = odeset('RelTol', 1e-12);
-    [t, X] = ode15s(@(t, X)ssEq(t, X), [0, 10], [th0, dth0], opts);
+    [t, X] = ode15s(@(t, X)ssEq(t, X), [TStart, TFinish], [th0, dth0], opts);
 end

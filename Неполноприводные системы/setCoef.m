@@ -1,4 +1,5 @@
-global M m l R J g A B C a L RR M_ T HCoef Theta0 dTheta0 w0;
+global M m l R J g A B C a L RR M_ T HCoef Theta0 dTheta0 w0 version;
+version = 0;
 M = 1;
 m = 0.1;
 l = 0.9;
@@ -21,7 +22,7 @@ T = 2*pi;
 Q = [0.1 0 0; 0 0.1 0; 0 0 1];
 RR = 0.3;
 %Рассчёт HCoef через LMI
-%HCoef = getHCoef(Q, RR, N, M_, T); 
+HCoef = getHCoef(Q, RR, N, M_, T);
 
 %Инициализирует HCoef заранее подсчитанными значениями
-setHCoef;
+%setHCoef;
