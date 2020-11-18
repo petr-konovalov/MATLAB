@@ -1,5 +1,5 @@
 function res = calcField(r)
-    q = [1, 1, 1];
+    global fieldGrad
     c = 0;
-    res = linField(r, q, c);
+    res = linField(r, fieldGrad, c);
 end

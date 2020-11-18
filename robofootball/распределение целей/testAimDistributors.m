@@ -1,5 +1,9 @@
-testCount = 100;
-pntCnt = 7;
+testCount = 1000;
+pntCnt = 15;
+failedTests = 0;
+MADisFasterBFADcnt = 0;
+WorstBFADTimer = 0;
+WorstMADTimer = 0;
 for test = 1: testCount
     startPos = zeros(pntCnt, 2);
     aimPos = zeros(pntCnt, 2);
@@ -17,16 +21,23 @@ for test = 1: testCount
     BFAD = minMaxEdgeBFAD(startPos, aimPos);
     MAD = matchingAD(startPos, aimPos);
     tic;
-    BFADDis = BFAD.getDistribution;
+    %BFADDis = BFAD.getDistribution;
     BFADTimer = toc;
     tic;
     MADDis = MAD.getDistribution;
     MADTimer = toc;
-    if isequal(BFADDis, MADDis)
-        fprintf('Test %5d ok BFADTimer: %f MADTimer: %f\n', test, BFADTimer, MADTimer);
-    else
-        fprintf('Test %5d fail\n', test);
+    WorstBFADTimer = max([WorstBFADTimer, BFADTimer]);
+    WorstMADTimer = max([WorstMADTimer, MADTimer]);
+    if (MADTimer < BFADTimer)
+        MADisFasterBFADcnt = MADisFasterBFADcnt + 1;
     end
+    %if isequal(BFADDis, MADDis)
+        fprintf('Test %5d ok BFADTimer: %f MADTimer: %f\n', test, BFADTimer, MADTimer);
+    %else
+        fprintf('Test %5d fail\n', test);
+        failedTests = failedTests + 1;
+    %end
 end
-
-
+fprintf('MAD is faster BFAD test counter: %d\n', MADisFasterBFADcnt);
+fprintf('Failed test counter: %d\n', failedTests);
+fprintf('Warst BFAD timer: %d\n', WorstBFADTimer);
