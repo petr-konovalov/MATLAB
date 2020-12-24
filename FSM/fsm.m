@@ -14,8 +14,13 @@ classdef fsm
             obj.next{obj.stateCount} = {};
         end
         function obj = addTransition(obj, condition, fromState, toState)
-            obj.cond{fromState}{length(obj.cond{fromState})+1} = condition;
-            obj.next{fromState}{length(obj.next{fromState})+1} = toState;
+            if 1 <= fromState && fromState <= obj.stateCount &&...
+                1 <= toState && toState <= obj.stateCount
+                obj.cond{fromState}{length(obj.cond{fromState})+1} = condition;
+                obj.next{fromState}{length(obj.next{fromState})+1} = toState;
+            else
+                disp('Reference to nonexistent state');
+            end
         end
         function obj = execute(obj)
             nextState = 0;
