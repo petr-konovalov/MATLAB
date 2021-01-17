@@ -1,19 +1,23 @@
-classdef fsm 
+classdef fsm < handle
     properties (GetAccess = public, SetAccess = private)
         stateCount = 1;
         curState = 1;
     end
+    
     properties (Access = private)
         cond = {};
         next = {};
+        actions = {};
     end
+    
     methods (Access = public)
-        function obj = addState(obj)
-            obj.stateCount = obj.stateCount + 1;
-            obj.cond{obj.stateCount} = {};
-            obj.next{obj.stateCount} = {};
+        function obj = fsm(stateCount)
+            obj.stateCount = stateCount;
+            obj.cond = cell(stateCount, 1);
+            obj.next = cell(stateCount, 1);
         end
-        function obj = addTransition(obj, condition, fromState, toState)
+        
+        function addTransition(obj, condition, fromState, toState)
             if 1 <= fromState && fromState <= obj.stateCount &&...
                 1 <= toState && toState <= obj.stateCount
                 obj.cond{fromState}{length(obj.cond{fromState})+1} = condition;
@@ -22,22 +26,39 @@ classdef fsm
                 disp('Reference to nonexistent state');
             end
         end
-        function obj = execute(obj)
-            nextState = 0;
+        
+        function associateStateWithAction(obj, state, action)
+            if length(obj.actions) >= state && ~isempty(obj.actions{state})
+                disp('State action already defined');
+            else
+                obj.actions{state} = action;
+            end    
+        end
+        
+        function res = doAction(obj)
+            if length(obj.actions) >= obj.curState && ~isempty(obj.actions{obj.curState})
+                res = obj.actions{obj.curState}();
+            else
+                disp('State action is undefined');
+            end
+        end
+        
+        function doTransition(obj, context)
+            nextState = obj.curState;
             for k = 1: length(obj.cond{obj.curState})
-                if obj.cond{obj.curState}{k}()
-                    if nextState == 0
+                if obj.cond{obj.curState}{k}(context)
+                    if nextState == obj.curState
                         nextState = obj.next{obj.curState}{k};
                     else
-                        disp('Ambiguous fsm transitions');
+                        disp('Ambiguous fsm transition');
+                        break;
                     end
                 end
             end
-            if nextState ~= 0
-                obj.curState = nextState;
-            end
+            obj.curState = nextState;
         end
-        function obj = restart(obj)
+        
+        function restart(obj)
             obj.curState = 1;
         end
     end
