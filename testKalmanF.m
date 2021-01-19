@@ -40,3 +40,7 @@ hold on;
 plot(1:n, y-x, '--');
 plot(1:n, xnn-x);
 hold off;
+
+
+
+

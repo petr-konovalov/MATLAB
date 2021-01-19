@@ -49,7 +49,7 @@ plot(tm, glueAngle(ang));
 figure();
 plot(tm, ang-glueAngle(ang));
 
-FID = fopen('./robofootball/Kalman/RData1filtered.txt', 'w');
+FID = fopen('RData1filtered.txt', 'w');
 fprintf(FID, '%f %f %f %f %f %f %f %f\n', RData1');
 fclose(FID);
 
